@@ -27,7 +27,7 @@ namespace S10275174_PRG2Assignment
 
         public override string ToString()
         {
-            return $"{OfferCode} - {OfferDesc}";
+            return $"{OfferCode} - {OfferDesc} ({Discount})";
         }
     }
 }
