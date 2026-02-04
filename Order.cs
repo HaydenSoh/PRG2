@@ -26,57 +26,56 @@ namespace S10275174_PRG2Assignment
     {
         public int OrderId { get; set; }
         public DateTime OrderDateTime { get; set; }
-        public double OrderTotal { get; private set; }
+        public double OrderTotal { get; set; }
         public OrderStatus Status { get; set; }
 
         public DateTime DeliveryDateTime { get; set; }
         public string DeliveryAddress { get; set; }
-        public string PaymentMethod { get; set; }
+        public string OrderPaymentMethod { get; set; }
+        public bool OrderPaid { get; set; }
 
-        private List<OrderedFoodItem> orderedItems = new List<OrderedFoodItem>();
+        public Customer Customer { get; set; }
+        public Restaurant Restaurant { get; set; }
 
-        public Order(int id, DateTime deliveryDateTime, string address, string paymentMethod)
+        public List<OrderedFoodItem> OrderedFoodItems { get; set; }
+
+        public Order(int id, Customer cust, Restaurant rest)
         {
             OrderId = id;
-            DeliveryDateTime = deliveryDateTime;
-            DeliveryAddress = address;
-            PaymentMethod = paymentMethod;
+            Customer = cust;
+            Restaurant = rest;
             OrderDateTime = DateTime.Now;
             Status = OrderStatus.Pending;
+            OrderedFoodItems = new List<OrderedFoodItem>();
         }
 
         public void AddOrderedFoodItem(OrderedFoodItem item)
         {
-            orderedItems.Add(item);
+            OrderedFoodItems.Add(item);
         }
 
         public bool RemoveOrderedFoodItem(OrderedFoodItem item)
         {
-            return orderedItems.Remove(item);
+            return OrderedFoodItems.Remove(item);
         }
 
         public void DisplayOrderedFoodItems()
         {
-            foreach (OrderedFoodItem item in orderedItems)
-            {
-                System.Console.WriteLine(item);
-            }
+            foreach (OrderedFoodItem i in OrderedFoodItems)
+                System.Console.WriteLine(i);
         }
 
         public double CalculateOrderTotal()
         {
             double total = 0;
+            foreach (OrderedFoodItem i in OrderedFoodItems)
+                total += i.CalculateSubTotal();
 
-            foreach (OrderedFoodItem item in orderedItems)
-            {
-                total += item.CalculateSubTotal();
-            }
+            total += 5.00;          // delivery fee
+            total += total * 0.30;  // platform fee
 
-            double deliveryFee = 5.0;
-            double platformFee = total * 0.30;
-
-            OrderTotal = total + deliveryFee + platformFee;
-            return OrderTotal;
+            OrderTotal = total;
+            return total;
         }
 
         public override string ToString()

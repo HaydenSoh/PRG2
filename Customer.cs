@@ -1,7 +1,7 @@
 ﻿//==========================================================
 // Student Number : S10275174
-// Student Name : Hayden Soh Kai Jun
-// Partner Name : Ang Zheng Yang
+// Student Name : Ang Zheng Yang
+// Partner Name : Hayden Soh Kai Jun
 //==========================================================
 
 using System;
@@ -10,42 +10,40 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace S10268816_PRG2Assignment
+namespace S10275174_PRG2Assignment
 {
     public class Customer
     {
-        public string CustomerName { get; set; }
         public string EmailAddress { get; set; }
-
-        private List<Order> orders = new List<Order>();
+        public string CustomerName { get; set; }
+        public List<Order> Orders { get; set; }
 
         public Customer(string name, string email)
         {
             CustomerName = name;
             EmailAddress = email;
+            Orders = new List<Order>();
         }
 
         public void AddOrder(Order order)
         {
-            orders.Add(order);
+            Orders.Add(order);
         }
 
         public bool RemoveOrder(Order order)
         {
-            return orders.Remove(order);
+            return Orders.Remove(order);
         }
 
         public void DisplayAllOrders()
         {
-            foreach (Order order in orders)
-            {
-                System.Console.WriteLine(order);
-            }
+            foreach (Order o in Orders)
+                System.Console.WriteLine(o);
         }
 
         public override string ToString()
         {
-            return $"{CustomerName} ({EmailAddress})";
+            return CustomerName;
         }
     }
 }

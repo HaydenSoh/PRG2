@@ -18,56 +18,51 @@ namespace S10275174_PRG2Assignment
         public string RestaurantName { get; set; }
         public string RestaurantEmail { get; set; }
 
-        private List<Menu> menus = new List<Menu>();
-        private List<SpecialOffer> specialOffers = new List<SpecialOffer>();
-        private List<Order> orders = new List<Order>();
+        public List<Menu> Menus { get; set; }
+        public List<SpecialOffer> SpecialOffers { get; set; }
 
         public Restaurant(string id, string name, string email)
         {
             RestaurantId = id;
             RestaurantName = name;
             RestaurantEmail = email;
+            Menus = new List<Menu>();
+            SpecialOffers = new List<SpecialOffer>();
+        }
+
+        public void DisplayMenu()
+        {
+            foreach (Menu m in Menus)
+            {
+                System.Console.WriteLine(m.MenuName);
+                m.DisplayFoodItems();
+            }
         }
 
         public void AddMenu(Menu menu)
         {
-            menus.Add(menu);
+            Menus.Add(menu);
         }
 
         public bool RemoveMenu(Menu menu)
         {
-            return menus.Remove(menu);
+            return Menus.Remove(menu);
         }
 
-        public void DisplayMenus()
+        public void DisplayOrders()
         {
-            foreach (Menu menu in menus)
-            {
-                System.Console.WriteLine(menu);
-            }
+          
         }
 
         public void DisplaySpecialOffers()
         {
-            foreach (SpecialOffer offer in specialOffers)
-            {
-                System.Console.WriteLine(offer);
-            }
-        }
-
-        public void AddSpecialOffer(SpecialOffer offer)
-        {
-            specialOffers.Add(offer);
-        }
-
-        public void ReceiveOrder(Order order)
-        {
-            orders.Add(order);
+            foreach (SpecialOffer s in SpecialOffers)
+                System.Console.WriteLine(s);
         }
 
         public override string ToString()
         {
-            return $"{RestaurantName} ({RestaurantId})";
+            return $"{RestaurantId} - {RestaurantName}";
         }
     }
 }

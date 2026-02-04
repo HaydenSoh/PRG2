@@ -1,7 +1,7 @@
 ﻿//==========================================================
 // Student Number : S10275174
-// Student Name : Hayden Soh Kai Jun
-// Partner Name : Ang Zheng Yang
+// Student Name : Ang Zheng Yang
+// Partner Name : Hayden Soh Kai Jun
 //==========================================================
 
 using System;
@@ -10,29 +10,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace S10268816_PRG2Assignment
+namespace S10275174_PRG2Assignment
 {
     public class OrderedFoodItem
     {
-        public int QtyOrdered { get; set; }
-        public double SubTotal { get; private set; }
         public FoodItem FoodItem { get; set; }
+        public int QtyOrdered { get; set; }
+        public double SubTotal { get; set; }
 
-        public OrderedFoodItem(FoodItem item, int quantity)
+        public OrderedFoodItem(FoodItem item, int qty)
         {
             FoodItem = item;
-            QtyOrdered = quantity;
-            SubTotal = CalculateSubTotal();
+            QtyOrdered = qty;
+            CalculateSubTotal();
         }
 
         public double CalculateSubTotal()
         {
-            return FoodItem.ItemPrice * QtyOrdered;
+            SubTotal = FoodItem.ItemPrice * QtyOrdered;
+            return SubTotal;
         }
 
         public override string ToString()
         {
-            return $"{FoodItem.ItemName}, {QtyOrdered}";
+            return $"{FoodItem.ItemName} - {QtyOrdered}";
         }
     }
 }

@@ -16,36 +16,34 @@ namespace S10275174_PRG2Assignment
     {
         public string MenuId { get; set; }
         public string MenuName { get; set; }
-
-        private List<FoodItem> foodItems = new List<FoodItem>();
+        public List<FoodItem> FoodItems { get; set; }
 
         public Menu(string id, string name)
         {
             MenuId = id;
             MenuName = name;
+            FoodItems = new List<FoodItem>();
         }
 
-        public void AddFoodItem(FoodItem item)
+        public void AddFoodItem(FoodItem food)
         {
-            foodItems.Add(item);
+            FoodItems.Add(food);
         }
 
-        public bool RemoveFoodItem(FoodItem item)
+        public bool RemoveFoodItem(FoodItem food)
         {
-            return foodItems.Remove(item);
+            return FoodItems.Remove(food);
         }
 
         public void DisplayFoodItems()
         {
-            foreach (FoodItem item in foodItems)
-            {
-                System.Console.WriteLine(item);
-            }
+            foreach (FoodItem f in FoodItems)
+                System.Console.WriteLine(f);
         }
 
         public override string ToString()
         {
-            return $"{MenuName}";
+            return MenuName;
         }
     }
 }
