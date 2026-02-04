@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace S10275174_PRG2Assignment
+namespace S10268816_PRG2Assignment
 {
     public class FoodItem
     {
@@ -33,5 +33,6 @@ namespace S10275174_PRG2Assignment
         }
     }
 }
+
 
 
