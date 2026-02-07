@@ -2,6 +2,7 @@
 // Student Number : S10275174
 // Student Name : Ang Zheng Yang
 // Partner Name : Hayden Soh Kai Jun
+// This Order.cs is done by Zheng Yang!
 //==========================================================
 
 using System;
@@ -80,7 +81,7 @@ namespace S10275174_PRG2Assignment
 
         public override string ToString()
         {
-            return $"Order {OrderId} - {Status} - ${OrderTotal:F2}";
+            return $"Order ID: {OrderId}, Status: {Status}, Order Total: ${OrderTotal:F2}";
         }
     }
 }

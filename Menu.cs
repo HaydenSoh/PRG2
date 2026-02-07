@@ -2,6 +2,7 @@
 // Student Number : S10275174
 // Student Name : Ang Zheng Yang
 // Partner Name : Hayden Soh Kai Jun
+// This Menu.cs is done by Zheng Yang!
 //==========================================================
 
 using System;
@@ -43,7 +44,7 @@ namespace S10275174_PRG2Assignment
 
         public override string ToString()
         {
-            return MenuName;
+            return $"Menu Name: {MenuName}";
         }
     }
 }

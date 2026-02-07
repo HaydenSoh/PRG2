@@ -2,6 +2,7 @@
 // Student Number : S10275174
 // Student Name : Ang Zheng Yang
 // Partner Name : Hayden Soh Kai Jun
+// This Restaurant.cs is done by Zheng Yang!
 //==========================================================
 
 using System;
@@ -20,6 +21,7 @@ namespace S10275174_PRG2Assignment
 
         public List<Menu> Menus { get; set; }
         public List<SpecialOffer> SpecialOffers { get; set; }
+        public List<FoodItem> FoodItems { get; set; }
 
         public Restaurant(string id, string name, string email)
         {
@@ -28,6 +30,7 @@ namespace S10275174_PRG2Assignment
             RestaurantEmail = email;
             Menus = new List<Menu>();
             SpecialOffers = new List<SpecialOffer>();
+            FoodItems = new List<FoodItem>();
         }
 
         public void DisplayMenu()
@@ -54,15 +57,23 @@ namespace S10275174_PRG2Assignment
           
         }
 
-        public void DisplaySpecialOffers()
+        public void DisplayOrders(List<Order> orders)
         {
-            foreach (SpecialOffer s in SpecialOffers)
-                System.Console.WriteLine(s);
+            foreach (Order o in orders)
+            {
+                if (o.Restaurant.RestaurantId == RestaurantId)
+                    Console.WriteLine(o);
+            }
         }
 
         public override string ToString()
         {
-            return $"{RestaurantId} - {RestaurantName}";
+            return $"Resturant ID : {RestaurantId}, Restaurant Name: {RestaurantName}";
+        }
+
+        public void AddFoodItem(FoodItem item)
+        {
+            FoodItems.Add(item);
         }
     }
 }

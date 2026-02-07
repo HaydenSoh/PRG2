@@ -2,6 +2,7 @@
 // Student Number : S10275174
 // Student Name : Ang Zheng Yang
 // Partner Name : Hayden Soh Kai Jun
+// This SpecialOffer.cs is done by Zheng Yang!
 //==========================================================
 
 using System;
@@ -27,7 +28,7 @@ namespace S10275174_PRG2Assignment
 
         public override string ToString()
         {
-            return $"{OfferCode} - {OfferDesc} ({Discount})";
+            return $"Offer Code: {OfferCode}, Offer Description: {OfferDesc}, Discount: {Discount}";
         }
     }
 }

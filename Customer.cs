@@ -1,7 +1,8 @@
 ﻿//==========================================================
-// Student Number : S10268816C
-// Student Name : Hayden Soh Kai Jun
-// Partner Name : Ang Zheng Yang
+// Student Number : S10275174
+// Student Name : Ang Zheng Yang
+// Partner Name : Hayden Soh Kai Jun
+// This Customer.cs is done by Hayden!
 //==========================================================
 
 using System;
@@ -10,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace S10268816_PRG2Assignment
+namespace S10275174_PRG2Assignment
 {
     public class Customer
     {
@@ -43,11 +44,7 @@ namespace S10268816_PRG2Assignment
 
         public override string ToString()
         {
-            return CustomerName;
+            return $"Customer Name: {CustomerName}";
         }
     }
 }
-
-
-
-
