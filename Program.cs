@@ -208,20 +208,145 @@ class Program
         // By Hayden Soh
         // ==============================================
         static void CreateNewOrder()
+{
+    Console.WriteLine("\nCreate New Order");
+    Console.WriteLine("================");
+
+    // ---------------- Customer ----------------
+    Console.Write("Enter Customer Email: ");
+    string email = Console.ReadLine();
+
+    Customer customer = customers
+        .FirstOrDefault(c => c.EmailAddress.Equals(email, StringComparison.OrdinalIgnoreCase));
+
+    if (customer == null)
+    {
+        Console.WriteLine("Customer not found.");
+        return;
+    }
+
+    // ---------------- Restaurant ----------------
+    Console.Write("Enter Restaurant ID: ");
+    string restId = Console.ReadLine();
+
+    Restaurant restaurant = restaurants
+        .FirstOrDefault(r => r.RestaurantId.Equals(restId, StringComparison.OrdinalIgnoreCase));
+
+    if (restaurant == null)
+    {
+        Console.WriteLine("Restaurant not found.");
+        return;
+    }
+
+    // ---------------- Delivery Details ----------------
+    Console.Write("Enter Delivery Date (dd/mm/yyyy): ");
+    string date = Console.ReadLine();
+
+    Console.Write("Enter Delivery Time (hh:mm): ");
+    string time = Console.ReadLine();
+
+    DateTime deliveryDateTime = DateTime.Parse($"{date} {time}");
+
+    Console.Write("Enter Delivery Address: ");
+    string address = Console.ReadLine();
+
+    // ---------------- Create Order Object ----------------
+    int newOrderId = orders.Any() ? orders.Max(o => o.OrderId) + 1 : 1000;
+
+    Order order = new Order(newOrderId, customer, restaurant);
+    order.DeliveryDateTime = deliveryDateTime;
+    order.DeliveryAddress = address;
+
+    // ---------------- Food Selection ----------------
+    Console.WriteLine("\nAvailable Food Items:");
+
+    for (int i = 0; i < restaurant.FoodItems.Count; i++)
+    {
+        FoodItem f = restaurant.FoodItems[i];
+        Console.WriteLine($"{i + 1}. {f.ItemName} - ${f.ItemPrice:F2}");
+    }
+
+    while (true)
+    {
+        Console.Write("Enter item number (0 to finish): ");
+        int itemChoice = int.Parse(Console.ReadLine());
+
+        if (itemChoice == 0)
+            break;
+
+        if (itemChoice < 1 || itemChoice > restaurant.FoodItems.Count)
         {
-            Console.WriteLine("Create New Order");
-            Console.WriteLine("================");
-            Console.WriteLine("Enter Customer Email: ");
-            string Email = Console.ReadLine();
-            Console.WriteLine("Enter Restaurant ID: ");
-            string ID = Console.ReadLine();
-            Console.WriteLine("Enter Delivery Date(dd/ mm / yyyy): ");
-
-            Console.WriteLine("Enter Delivery Time(hh: mm): ");
-
-            Console.WriteLine("Enter Delivery Address: ");
-            string Address = Console.ReadLine();
+            Console.WriteLine("Invalid item number.");
+            continue;
         }
+
+        FoodItem selectedItem = restaurant.FoodItems[itemChoice - 1];
+
+        Console.Write("Enter quantity: ");
+        int qty = int.Parse(Console.ReadLine());
+
+        order.AddOrderedFoodItem(new OrderedFoodItem(selectedItem, qty));
+    }
+
+    // ---------------- Special Request ----------------
+    Console.Write("Add special request? [Y/N]: ");
+    string special = Console.ReadLine().ToUpper();
+
+    if (special == "Y")
+    {
+        Console.Write("Enter special request: ");
+        Console.ReadLine(); // Requirement only asks to prompt once
+    }
+
+    // ---------------- Calculate Total ----------------
+    double foodTotal = order.CalculateOrderTotal();
+    double deliveryFee = 5.00;
+    double finalTotal = foodTotal + deliveryFee;
+
+    order.OrderTotal = finalTotal;
+
+    Console.WriteLine(
+        $"\nOrder Total: ${foodTotal:F2} + ${deliveryFee:F2} (delivery) = ${finalTotal:F2}"
+    );
+
+    // ---------------- Payment ----------------
+    Console.Write("Proceed to payment? [Y/N]: ");
+    if (Console.ReadLine().ToUpper() != "Y")
+        return;
+
+    Console.WriteLine("\nPayment method:");
+    Console.Write("[CC] Credit Card / [PP] PayPal / [CD] Cash on Delivery: ");
+
+    order.OrderPaymentMethod = Console.ReadLine().ToUpper();
+    order.OrderPaid = true;
+
+    // ---------------- Update Status ----------------
+    order.Status = OrderStatus.Pending;
+
+    // ---------------- Update Collections ----------------
+    orders.Add(order);
+    customer.AddOrder(order);
+
+    // ---------------- Append To CSV ----------------
+    string items = string.Join("|",
+        order.OrderedFoodItems.Select(i => $"{i.FoodItem.ItemName}, {i.Quantity}")
+    );
+
+    using (StreamWriter sw = new StreamWriter("orders.csv", true))
+    {
+        sw.WriteLine(
+            $"{order.OrderId}," +
+            $"{customer.EmailAddress}," +
+            $"{restaurant.RestaurantId}," +
+            $"{order.DeliveryDateTime:dd/MM/yyyy}," +
+            $"{order.DeliveryDateTime:HH:mm}," +
+            $"{order.DeliveryAddress}," +
+            $"{DateTime.Now:dd/MM/yyyy HH:mm}," +
+            $"{order.OrderTotal}," +
+            $"{order.Status}," +
+            $"\"{items}\""
+        );
+    }
 
         // ==============================================
         // Basic Feature 6
@@ -362,4 +487,5 @@ class Program
                 Console.WriteLine("Deletion cancelled.");
             }
         }
+
     }
